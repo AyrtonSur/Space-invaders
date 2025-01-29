@@ -4,6 +4,36 @@ from PPlay.gameimage import *
 from jogo import tela
 from dificuldades import escolha
 
+def setranking(janela):
+    janela.set_title("ranking")
+    lista_aux = []
+    lista = []
+    teclado = Window.get_keyboard()
+    with open("registros.txt", "r") as registro:
+        line = registro.readline()
+        while line != '':
+            lista.append(line.rstrip("\n"))
+            line = registro.readline()
+    matriz = []
+    for n in range(len(lista)):
+        nome, pontos = lista[n].split("&")
+        lista_aux.append(nome)
+        lista_aux.append(pontos)
+        matriz.append(lista_aux)
+        lista_aux = []
+    matriz.sort(key = lambda x: (-int(x[1]), str(x[0])))
+
+    while True:
+        janela.set_background_color([0, 0, 0])
+        if teclado.key_pressed("ESC"):
+            return False
+        for n in range(5):
+            try:
+                janela.draw_text(str(matriz[n][0]) + "-" + str(matriz[n][1]), janela.width/3, janela.height/9 + n*80, 50, [100, 0, 100])
+            except IndexError:
+                break
+        janela.update()
+
 def menu():
     #Para o uso desse código, é necessário que em sua pasta você contenha os seguintes arquivos: 
 
@@ -86,7 +116,11 @@ def menu():
             ranking = GameImage("ranking_verde.png")
             ranking.set_position(menu.width/2-ranking.width/2, menu.height/2-(jogar.height/2)+10)
 
-            ranking_Colorido = True  
+            ranking_Colorido = True
+
+            if(mouse.is_button_pressed(1)):
+                setranking(menu)
+
 
         elif ranking_Colorido:
             ranking = GameImage("ranking.png")

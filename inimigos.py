@@ -7,7 +7,7 @@ def criar_inimigos(janela, tam_linha, tam_coluna):
     for n in range(tam_linha):
         linha_de_inimigos=[]
         for m in range(tam_coluna):
-            monstro = Sprite("invader1.png")
+            monstro = Sprite("red_enemy.png")
             monstro.set_position(janela.width/8+m*monstro.width/2+m*monstro.width, janela.height/14+n*monstro.height/2+n*monstro.height)
             linha_de_inimigos.append(monstro)
         matriz_de_inimigos.append(linha_de_inimigos)
@@ -48,4 +48,3 @@ def move_down(matriz_de_inimigos, dy, dificuldade, janela):
     for n in range(len(matriz_de_inimigos)):
         for inimigo in matriz_de_inimigos[n]:
             inimigo.y += dy * dificuldade
-
